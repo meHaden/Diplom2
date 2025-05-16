@@ -1,0 +1,284 @@
+﻿@using System.Linq
+@model List<OutfitPlaner_Applcation.Models.Clothing>
+@{
+    ViewData["Title"] = "Капсульный гардероб";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        .outfit-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .outfit-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .outfit-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .color-badge {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn btn-secondary home-button">
+            <i class="fas fa-home"></i> На главную
+        </a>
+
+        <div class="content mt-4">
+            <div class="text-center">
+                <h1 class="display-4 mb-4">Создание капсульного гардероба</h1>
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Сгенерированные комплекты не сохраняются
+                </div>
+
+                <button id="showClothesBtn" class="btn btn-primary mb-3">
+                    <i class="fas fa-tshirt"></i> Показать мой гардероб
+                </button>
+
+                <button id="generateOutfitsBtn" class="btn btn-success mb-4">
+                    <i class="fas fa-magic"></i> Подобрать комплекты
+                </button>
+
+                <div id="clothingContainer" class="mt-3" style="display: none;">
+                    @if (Model?.Any() == true)
+                    {
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-3 mb-3">
+                                    <div class="card">
+                                        <img src="@item.ImageUrl" class="card-img-top"
+                                             onerror="this.src='/images/no-image.png'">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@item.Type</h5>
+                                            <p class="card-text">
+                                                <span class="color-badge" style="background-color: @item.Color"></span>
+                                                @item.Color
+                                            </p>
+                                            <p class="card-text"><small>Стиль: @item.Style</small></p>
+                                            <p class="card-text"><small>Сезон: @item.Season</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            Ваш гардероб пуст. Добавьте вещи, чтобы создавать капсулы.
+                        </div>
+                    }
+                </div>
+
+                <div id="outfitsContainer" class="outfit-container">
+                    <h3 class="mb-3">Предложенные комплекты:</h3>
+                    <div id="outfitsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showClothesBtn = document.getElementById('showClothesBtn');
+            const clothingContainer = document.getElementById('clothingContainer');
+            const generateBtn = document.getElementById('generateOutfitsBtn');
+            const outfitsContainer = document.getElementById('outfitsContainer');
+            const outfitsList = document.getElementById('outfitsList');
+
+            showClothesBtn.addEventListener('click', function() {
+                clothingContainer.style.display =
+                    clothingContainer.style.display === 'none' ? 'block' : 'none';
+            });
+
+            generateBtn.addEventListener('click', generateOutfits);
+
+            async function generateOutfits() {
+                try {
+                    outfitsContainer.style.display = 'block';
+                    outfitsList.innerHTML = `
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Загрузка...</span>
+                            </div>
+                            <p class="mt-2">Подбираем лучшие сочетания...</p>
+                        </div>
+                    `;
+
+                    const response = await fetch('/CapsuleWardrobe/GenerateOutfits', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include'
+                    });
+
+                    if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
+
+                    const data = await response.json();
+                    if (!data.success) throw new Error(data.error || "Ошибка генерации");
+                    if (!data.outfits?.length) throw new Error("Не найдено подходящих комплектов");
+
+                    renderOutfits(data.outfits);
+                } catch (error) {
+                    showError(error.message);
+                    console.error("Ошибка:", error);
+                }
+            }
+
+            function renderOutfits(outfits) {
+                outfitsList.innerHTML = '';
+
+                if (!outfits || !Array.isArray(outfits)) {
+                    showError("Получены некорректные данные");
+                    return;
+                }
+
+                let validOutfitsCount = 0;
+
+                outfits.forEach((outfit, index) => {
+                    const top = outfit?.top || outfit?.Top || {};
+                    const bottom = outfit?.bottom || outfit?.Bottom || {};
+
+                    // Basic validation - require type and image
+                    const hasTop = top && top.type && (top.image || top.Image);
+                    const hasBottom = bottom && bottom.type && (bottom.image || bottom.Image);
+
+                    if (!hasTop || !hasBottom) {
+                        console.warn(`Пропущен комплект #${index+1}`, {
+                            topValid: hasTop,
+                            bottomValid: hasBottom
+                        });
+                        return;
+                    }
+
+                    validOutfitsCount++;
+
+                    // Handle case sensitivity for properties
+                    const topImage = top.image || top.Image || '/images/no-image.png';
+                    const topType = top.type || top.Type || 'Верхняя одежда';
+                    const topColor = top.color || top.Color || '#ccc';
+                    const topStyle = top.style || top.Style || '';
+                    const topSeason = top.season || top.Season || '';
+
+                    const bottomImage = bottom.image || bottom.Image || '/images/no-image.png';
+                    const bottomType = bottom.type || bottom.Type || 'Нижняя одежда';
+                    const bottomColor = bottom.color || bottom.Color || '#ccc';
+                    const bottomStyle = bottom.style || bottom.Style || '';
+                    const bottomSeason = bottom.season || bottom.Season || '';
+
+                    const matchScore = outfit.matchScore || outfit.MatchScore || 0;
+
+                    const outfitHtml = `
+                        <div class="outfit-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Комплект #${validOutfitsCount}</h5>
+                                <span class="badge badge-success">Совместимость: ${matchScore}%</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center p-3 bg-light rounded">
+                                        <img src="${topImage}"
+                                             class="outfit-img"
+                                             alt="${topType}"
+                                             onerror="this.src='/images/no-image.png'">
+                                        <div class="ml-3">
+                                            <h5>${topType}</h5>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="color-badge" style="background-color:${topColor}"></span>
+                                                <span class="ml-2">${topColor || 'Не указан'}</span>
+                                            </div>
+                                            ${topStyle ? `<p class="mb-1"><small>Стиль: ${topStyle}</small></p>` : ''}
+                                            ${topSeason ? `<p class="mb-0"><small>Сезон: ${topSeason}</small></p>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center p-3 bg-light rounded">
+                                        <img src="${bottomImage}"
+                                             class="outfit-img"
+                                             alt="${bottomType}"
+                                             onerror="this.src='/images/no-image.png'">
+                                        <div class="ml-3">
+                                            <h5>${bottomType}</h5>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="color-badge" style="background-color:${bottomColor}"></span>
+                                                <span class="ml-2">${bottomColor || 'Не указан'}</span>
+                                            </div>
+                                            ${bottomStyle ? `<p class="mb-1"><small>Стиль: ${bottomStyle}</small></p>` : ''}
+                                            ${bottomSeason ? `<p class="mb-0"><small>Сезон: ${bottomSeason}</small></p>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-info mt-2 mb-0">
+                                <i class="fas fa-info-circle"></i> Комплект доступен только в этой сессии
+                            </div>
+                        </div>
+                    `;
+
+                    outfitsList.insertAdjacentHTML('beforeend', outfitHtml);
+                });
+
+                if (validOutfitsCount === 0) {
+                    showError("Не удалось отобразить ни одного комплекта. Убедитесь, что в гардеробе есть верхняя и нижняя одежда с указанными типами и изображениями.");
+                }
+            }
+
+            function showError(message) {
+                outfitsList.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5>Ошибка</h5>
+                        <p>${message}</p>
+                        <div class="mt-3">
+                            <button onclick="location.reload()" class="btn btn-sm btn-secondary mr-2">
+                                Попробовать снова
+                            </button>
+                            <a href="/ProfileWardrobe/MyWardrobe" class="btn btn-sm btn-primary">
+                                Перейти в гардероб
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

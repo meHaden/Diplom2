@@ -1,0 +1,136 @@
+﻿@model OutfitPlaner_Applcation.Models.User
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link rel="stylesheet" href="~/css/user.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+    <div class="back-to-home">
+        <a href="/Home/Index" class="btn-home">
+            <i class="fas fa-home"></i> Вернуться на главную
+        </a>
+    </div>
+
+    <div class="burger-menu">
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+        <nav class="menu">
+            <ul>
+                <li><a href="/ProfileWardrobe/MyProfile" data-title="Мой Профиль"><i class="fas fa-user"></i></a></li>
+                <li><a href="/Favorite/Favorite" data-title="Избранное"><i class="fa fa-thumbs-up"></i></a></li>
+                <li><a href="/ProfileWardrobe/MyWardrobe" data-title="Мой Гардероб"><i class="fas fa-tshirt"></i></a></li>
+                <li><a href="/CapsuleWardrobe/CapsuleWardrobe" data-title="Капсульный Гардероб"><i class="fas fa-suitcase"></i></a></li>
+                <li><a href="/CapsuleWardrobe/ThematicCapsule" data-title="Тематическая капсула"><i class="fas fa-palette"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <h1>Мой Профиль</h1>
+
+    <div class="user-info">
+        <p><strong>Имя:</strong> @Model.UserName</p>
+        <p><strong>Почта:</strong> @Model.Email</p>
+        <p><strong>Дней с регистрации:</strong> @((DateTime.UtcNow - Model.CreatedAt).Days)</p>
+
+        @Html.AntiForgeryToken()
+
+        <div class="delete-account">
+            <button class="btn-delete">Удалить аккаунт</button>
+        </div>
+
+        <!-- Модальное окно для подтверждения удаления аккаунта -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <h2>Удаление аккаунта</h2>
+                <p>Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить.</p>
+                <div class="modal-buttons">
+                    <button id="confirmDeleteBtn" class="btn-delete">
+                        <i class="fas fa-trash"></i> Удалить
+                    </button>
+                    <button id="cancelDeleteBtn" class="btn-cancel">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Управление модальным окном -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteModal = document.getElementById("deleteModal");
+                const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+                const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+                const deleteButton = document.querySelector(".btn-delete");
+
+                // Функции управления модальным окном
+                function openDeleteModal() {
+                    deleteModal.style.display = "block";
+                    document.body.style.overflow = "hidden"; // Блокируем прокрутку 
+                }
+
+                function closeDeleteModal() {
+                    deleteModal.style.display = "none";
+                    document.body.style.overflow = "auto"; // Восстанавливаем прокрутку
+                }
+
+                deleteButton.addEventListener("click", openDeleteModal);
+                cancelDeleteBtn.addEventListener("click", closeDeleteModal);
+
+                // Обработчик для кнопки Удалить в модальном окне
+                confirmDeleteBtn.addEventListener("click", async () => {
+                    try {
+                        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+                        const response = await fetch("/ProfileWardrobe/DeleteAccount", {
+                            method: "POST",
+                            headers: {
+                                "RequestVerificationToken": token,
+                                "Content-Type": "application/json"
+                            },
+                            credentials: 'same-origin'
+                        });
+
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                        } else {
+                            const errorData = await response.json();
+                            console.error("Ошибка:", errorData);
+                            alert("Произошла ошибка при удалении аккаунта");
+                        }
+                    } catch (error) {
+                        console.error("Ошибка:", error);
+                        alert("Произошла непредвиденная ошибка");
+                    } finally {
+                        closeDeleteModal();
+                    }
+                });
+
+                // Закрытие модального окна при клике вне его области
+                window.addEventListener("click", (event) => {
+                    if (event.target === deleteModal) {
+                        closeDeleteModal();
+                    }
+                });
+
+                // Закрытие модального окна при нажатии Escape
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && deleteModal.style.display === "block") {
+                        closeDeleteModal();
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

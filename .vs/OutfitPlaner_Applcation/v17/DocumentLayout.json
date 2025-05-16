@@ -1,0 +1,161 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vlase\\source\\repos\\Diplom\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\controllers\\capsulewardrobecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\controllers\\capsulewardrobecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\views\\capsule\\generatecapsules.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\views\\capsule\\generatecapsules.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\controllers\\generatethemedoutfitscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\controllers\\generatethemedoutfitscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\data\\wardrobedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\data\\wardrobedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|c:\\users\\vlase\\source\\repos\\diplom\\outfitplaner_applcation\\controllers\\wardrobecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF09A463-0102-42AF-A7DF-1F378473E984}|OutfitPlaner_Applcation\\OutfitPlaner_Applcation.csproj|solutionrelative:outfitplaner_applcation\\controllers\\wardrobecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 685,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CapsuleWardrobeController.cs",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\CapsuleWardrobeController.cs",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Controllers\\CapsuleWardrobeController.cs",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\CapsuleWardrobeController.cs",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Controllers\\CapsuleWardrobeController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAIwAgBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T06:27:06.894Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAALUAAAAAAAAAAAAAwMcAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T06:56:29.387Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GenerateCapsules.cshtml",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Views\\Capsule\\GenerateCapsules.cshtml",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Views\\Capsule\\GenerateCapsules.cshtml",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Views\\Capsule\\GenerateCapsules.cshtml",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Views\\Capsule\\GenerateCapsules.cshtml",
+              "ViewState": "AgIAAMwAAAAAAAAAAAAmwBsBAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-15T06:30:41.778Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GenerateThemedOutfitsController.cs",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\GenerateThemedOutfitsController.cs",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Controllers\\GenerateThemedOutfitsController.cs",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\GenerateThemedOutfitsController.cs",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Controllers\\GenerateThemedOutfitsController.cs",
+              "ViewState": "AgIAAEYBAAAAAAAAAAAcwGgBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T06:26:16.19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "WardrobeDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Data\\WardrobeDbContext.cs",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Data\\WardrobeDbContext.cs",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Data\\WardrobeDbContext.cs",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Data\\WardrobeDbContext.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAswA8AAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T07:04:49.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Program.cs",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Program.cs",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Program.cs",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Program.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAIwD0AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T07:03:05.424Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Views\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Views\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Views\\Account\\Register.cshtml",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Views\\Account\\Register.cshtml",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAIwEEAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-15T07:10:49.747Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "WardrobeController.cs",
+              "DocumentMoniker": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\WardrobeController.cs",
+              "RelativeDocumentMoniker": "OutfitPlaner_Applcation\\Controllers\\WardrobeController.cs",
+              "ToolTip": "C:\\Users\\vlase\\source\\repos\\Diplom\\OutfitPlaner_Applcation\\Controllers\\WardrobeController.cs",
+              "RelativeToolTip": "OutfitPlaner_Applcation\\Controllers\\WardrobeController.cs",
+              "ViewState": "AgIAAKIAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T06:27:19.147Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

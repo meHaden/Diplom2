@@ -1,0 +1,445 @@
+﻿@using System.Linq
+@model List<OutfitPlaner_Applcation.Models.Clothing>
+@{
+    ViewData["Title"] = "Тематические луки";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .outfit-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .outfit-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .outfit-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .color-badge {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .color-option {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+            .color-option:hover {
+                transform: scale(1.1);
+            }
+
+            .color-option.selected {
+                border-color: #000;
+                transform: scale(1.1);
+            }
+
+        .theme-btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            min-width: 120px;
+        }
+
+        .theme-icon {
+            margin-right: 8px;
+        }
+
+        .main-title {
+            margin-bottom: 30px;
+            color: #343a40;
+            font-weight: 600;
+        }
+
+        .no-outfits {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <a href="/" class="btn btn-secondary home-button">
+            <i class="fas fa-home"></i> На главную
+        </a>
+
+        <div class="text-center">
+            <h1 class="main-title">
+                <i class="fas fa-star"></i> Тематические луки
+            </h1>
+
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> Подберите идеальный образ для любого события
+            </div>
+
+            <div class="filter-section">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="filter-title">
+                            <i class="fas fa-calendar-alt theme-icon"></i> Выберите событие:
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <button class="btn btn-outline-primary theme-btn active" data-theme="all">
+                                <i class="fas fa-globe"></i> Все
+                            </button>
+                            <button class="btn btn-outline-primary theme-btn" data-theme="newyear">
+                                <i class="fas fa-tree"></i> Новый год
+                            </button>
+                            <button class="btn btn-outline-primary theme-btn" data-theme="romance">
+                                <i class="fas fa-heart"></i> Романтика
+                            </button>
+                            <button class="btn btn-outline-primary theme-btn" data-theme="business">
+                                <i class="fas fa-briefcase"></i> Бизнес
+                            </button>
+                            <button class="btn btn-outline-primary theme-btn" data-theme="birthday">
+                                <i class="fas fa-birthday-cake"></i> День рождения
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="filter-title">
+                            <i class="fas fa-palette theme-icon"></i> Цветовая гамма:
+                        </div>
+                        <div class="text-center">
+                            <span class="color-option selected" style="background-color: #FFFFFF;" data-color="all" title="Все цвета"></span>
+                            <span class="color-option" style="background-color: #000000;" data-color="Черный" title="Черный"></span>
+                            <span class="color-option" style="background-color: #FF0000;" data-color="Красный" title="Красный"></span>
+                            <span class="color-option" style="background-color: #0000FF;" data-color="Синий" title="Синий"></span>
+                            <span class="color-option" style="background-color: #808080;" data-color="Серый" title="Серый"></span>
+                            <span class="color-option" style="background-color: #FFC0CB;" data-color="Розовый" title="Розовый"></span>
+                            <span class="color-option" style="background-color: #008000;" data-color="Зеленый" title="Зеленый"></span>
+                            <span class="color-option" style="background-color: #A52A2A;" data-color="Коричневый" title="Коричневый"></span>
+                            <span class="color-option" style="background-color: #F5F5DC;" data-color="Бежевый" title="Бежевый"></span>
+                            <span class="color-option" style="background-color: #FFFF00;" data-color="Желтый" title="Желтый"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="generateOutfitsBtn" class="btn btn-success btn-lg mb-4">
+                <i class="fas fa-magic"></i> Подобрать луки
+            </button>
+
+            <div id="outfitsContainer" class="outfit-container">
+                <h3 class="mb-4"><i class="fas fa-list-ul"></i> Подобранные образы:</h3>
+                <div id="outfitsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateOutfitsBtn');
+            const outfitsContainer = document.getElementById('outfitsContainer');
+            const outfitsList = document.getElementById('outfitsList');
+
+            let selectedTheme = 'all';
+            let selectedColor = 'all';
+
+            // Обработчики для выбора темы
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedTheme = this.dataset.theme;
+                });
+            });
+
+            // Обработчики для выбора цвета
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedColor = this.dataset.color;
+                });
+            });
+
+            generateBtn.addEventListener('click', generateOutfits);
+
+            async function generateOutfits() {
+                try {
+                    outfitsContainer.style.display = 'block';
+                    outfitsList.innerHTML = `
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="sr-only">Загрузка...</span>
+                            </div>
+                            <p class="mt-3">Идет подбор образов...</p>
+                        </div>
+                    `;
+
+                    const response = await fetch('/CapsuleWardrobe/GenerateThemedOutfits', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            theme: selectedTheme,
+                            color: selectedColor
+                        }),
+                        credentials: 'include'
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `Ошибка сервера: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (!data.success) throw new Error(data.error || "Ошибка генерации");
+                    if (!data.outfits?.length) {
+                        showNoOutfitsMessage();
+                        return;
+                    }
+
+                    renderOutfits(data.outfits);
+                } catch (error) {
+                    showError(error.message);
+                    console.error("Ошибка:", error);
+                }
+            }
+
+            function renderOutfits(outfits) {
+                outfitsList.innerHTML = '';
+
+                if (!outfits || !Array.isArray(outfits)) {
+                    showError("Получены некорректные данные");
+                    return;
+                }
+
+                outfits.forEach((outfit, index) => {
+                    const top = outfit?.top || outfit?.Top || {};
+                    const bottom = outfit?.bottom || outfit?.Bottom || {};
+                    const shoes = outfit?.shoes || outfit?.Shoes || {};
+                    const accessories = outfit?.accessories || outfit?.Accessories || {};
+
+                    const topImage = top.image || top.Image || '/images/no-image.png';
+                    const topType = top.type || top.Type || 'Верх';
+                    const topColor = top.color || top.Color || '#ccc';
+                    const topStyle = top.style || top.Style || '';
+                    const topSeason = top.season || top.Season || '';
+
+                    const bottomImage = bottom.image || bottom.Image || '/images/no-image.png';
+                    const bottomType = bottom.type || bottom.Type || 'Низ';
+                    const bottomColor = bottom.color || bottom.Color || '#ccc';
+                    const bottomStyle = bottom.style || bottom.Style || '';
+                    const bottomSeason = bottom.season || bottom.Season || '';
+
+                    const shoesImage = shoes.image || shoes.Image || '';
+                    const shoesType = shoes.type || shoes.Type || '';
+                    const shoesColor = shoes.color || shoes.Color || '';
+
+                    const accessoriesList = accessories.items || accessories.Items || [];
+
+                    const matchScore = outfit.matchScore || outfit.MatchScore || 0;
+                    const themeDescription = outfit.themeDescription || '';
+                    const themeName = getThemeName(outfit.theme || selectedTheme);
+
+                    const outfitHtml = `
+                        <div class="outfit-card">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="mb-0">Образ #${index + 1}</h4>
+                                <div>
+                                    <span class="badge badge-primary mr-2">${themeName}</span>
+                                    <span class="badge badge-pill badge-success">Совпадение: ${matchScore}%</span>
+                                </div>
+                            </div>
+
+                            ${themeDescription ? `
+                            <div class="alert alert-secondary mb-3">
+                                <i class="fas fa-lightbulb mr-2"></i>${themeDescription}
+                            </div>` : ''}
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center p-3 bg-light rounded">
+                                        <img src="${topImage}"
+                                             class="outfit-img"
+                                             alt="${topType}"
+                                             onerror="this.src='/images/no-image.png'">
+                                        <div>
+                                            <h5>${topType}</h5>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="color-badge" style="background-color:${topColor}"></span>
+                                                <span class="ml-2">${topColor || 'Цвет не указан'}</span>
+                                            </div>
+                                            ${topStyle ? `<p class="mb-1"><small><strong>Стиль:</strong> ${topStyle}</small></p>` : ''}
+                                            ${topSeason ? `<p class="mb-0"><small><strong>Сезон:</strong> ${topSeason}</small></p>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center p-3 bg-light rounded">
+                                        <img src="${bottomImage}"
+                                             class="outfit-img"
+                                             alt="${bottomType}"
+                                             onerror="this.src='/images/no-image.png'">
+                                        <div>
+                                            <h5>${bottomType}</h5>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="color-badge" style="background-color:${bottomColor}"></span>
+                                                <span class="ml-2">${bottomColor || 'Цвет не указан'}</span>
+                                            </div>
+                                            ${bottomStyle ? `<p class="mb-1"><small><strong>Стиль:</strong> ${bottomStyle}</small></p>` : ''}
+                                            ${bottomSeason ? `<p class="mb-0"><small><strong>Сезон:</strong> ${bottomSeason}</small></p>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            ${shoesImage ? `
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                                        <img src="${shoesImage}"
+                                             class="outfit-img"
+                                             alt="${shoesType}"
+                                             onerror="this.src='/images/no-image.png'">
+                                        <div>
+                                            <h5 class="mb-1">Обувь: ${shoesType || 'Не указана'}</h5>
+                                            ${shoesColor ? `
+                                            <div class="d-flex align-items-center">
+                                                <span class="color-badge" style="background-color:${shoesColor}"></span>
+                                                <span class="ml-2">${shoesColor}</span>
+                                            </div>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>` : ''}
+
+                            ${accessoriesList.length > 0 ? `
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <h5><i class="fas fa-gem"></i> Аксессуары:</h5>
+                                    <div class="d-flex flex-wrap">
+                                        ${accessoriesList.map(acc => `
+                                        <div class="mr-3 mb-2">
+                                            <span class="badge badge-info">${acc}</span>
+                                        </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>` : ''}
+
+                            <div class="alert alert-light mt-3 mb-0">
+                                <i class="fas fa-info-circle"></i> Этот образ сгенерирован автоматически на основе вашего гардероба
+                            </div>
+                        </div>
+                    `;
+
+                    outfitsList.insertAdjacentHTML('beforeend', outfitHtml);
+                });
+            }
+
+            function showNoOutfitsMessage() {
+                outfitsList.innerHTML = `
+                    <div class="no-outfits">
+                        <i class="fas fa-tshirt fa-3x mb-3" style="color: #6c757d;"></i>
+                        <h4>Не найдено подходящих образов</h4>
+                        <p class="mb-4">Попробуйте изменить параметры фильтрации или добавить больше вещей в гардероб</p>
+                        <div>
+                            <button onclick="location.reload()" class="btn btn-primary mr-2">
+                                <i class="fas fa-sync-alt"></i> Попробовать снова
+                            </button>
+                            <a href="/ProfileWardrobe/MyWardrobe" class="btn btn-success">
+                                <i class="fas fa-wardrobe"></i> Мой гардероб
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function showError(message) {
+                outfitsList.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Ошибка</h4>
+                        <p>${message}</p>
+                        <div class="mt-3">
+                            <button onclick="location.reload()" class="btn btn-primary mr-2">
+                                <i class="fas fa-sync-alt"></i> Попробовать снова
+                            </button>
+                            <a href="/" class="btn btn-secondary">
+                                <i class="fas fa-home"></i> На главную
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function getThemeName(themeKey) {
+                const themes = {
+                    'all': 'Все события',
+                    'newyear': 'Новый год',
+                    'romance': 'Романтика',
+                    'business': 'Бизнес',
+                    'birthday': 'День рождения'
+                };
+                return themes[themeKey] || themeKey;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+﻿
+using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using OutfitPlaner_Applcation.Data;
+
+#nullable disable
+
+namespace OutfitPlaner_Applcation.Migrations
+{
+    [DbContext(typeof(WardrobeDbContext))]
+    partial class WardrobeDbContextModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.CapsuleWardrobe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("Created_At")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID_User");
+
+                    b.Property<bool?>("IsFavorite")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BOOLEAN")
+                        .HasColumnName("Is_Favorite")
+                        .HasDefaultValueSql("FALSE");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("CapsuleWardrobe", (string)null);
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.Clothing", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID");
+
+                    b.Property<DateTime?>("AddedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("Added_at")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("Condition")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID_User");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Image_Url");
+
+                    b.Property<string>("Material")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Season")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Style")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Clothing", (string)null);
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.ClothingCapsule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID");
+
+                    b.Property<int>("IdCapsuleWardrobe")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID_CapsuleWardrobe");
+
+                    b.Property<int>("IdClothing")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID_Clothing");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCapsuleWardrobe");
+
+                    b.HasIndex("IdClothing");
+
+                    b.ToTable("ClothingCapsule", (string)null);
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.ClothingLook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID");
+
+                    b.Property<int>("IdClothing")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID_Clothing");
+
+                    b.Property<int>("IdLook")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID_Look");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdClothing");
+
+                    b.HasIndex("IdLook");
+
+                    b.ToTable("ClothingLook", (string)null);
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.ThematicLook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("Created_At")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID_User");
+
+                    b.Property<bool?>("IsFavorite")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BOOLEAN")
+                        .HasColumnName("Is_Favorite")
+                        .HasDefaultValueSql("FALSE");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("ThematicLook", (string)null);
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ID");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("Created_At")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Password_Hash");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("User_Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Email" }, "IX_User_Email")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "UserName" }, "IX_User_User_Name")
+                        .IsUnique();
+
+                    b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.CapsuleWardrobe", b =>
+                {
+                    b.HasOne("OutfitPlaner_Applcation.Models.User", "IdUserNavigation")
+                        .WithMany("CapsuleWardrobes")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdUserNavigation");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.Clothing", b =>
+                {
+                    b.HasOne("OutfitPlaner_Applcation.Models.User", "IdUserNavigation")
+                        .WithMany("Clothings")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdUserNavigation");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.ClothingCapsule", b =>
+                {
+                    b.HasOne("OutfitPlaner_Applcation.Models.CapsuleWardrobe", "IdCapsuleWardrobeNavigation")
+                        .WithMany("ClothingCapsules")
+                        .HasForeignKey("IdCapsuleWardrobe")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OutfitPlaner_Applcation.Models.Clothing", "IdClothingNavigation")
+                        .WithMany("ClothingCapsules")
+                        .HasForeignKey("IdClothing")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdCapsuleWardrobeNavigation");
+
+                    b.Navigation("IdClothingNavigation");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.ClothingLook", b =>
+                {
+                    b.HasOne("OutfitPlaner_Applcation.Models.Clothing", "IdClothingNavigation")
+                        .WithMany("ClothingLooks")
+                        .HasForeignKey("IdClothing")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OutfitPlaner_Applcation.Models.ThematicLook", "IdLookNavigation")
+                        .WithMany("ClothingLooks")
+                        .HasForeignKey("IdLook")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdClothingNavigation");
+
+                    b.Navigation("IdLookNavigation");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.ThematicLook", b =>
+                {
+                    b.HasOne("OutfitPlaner_Applcation.Models.User", "IdUserNavigation")
+                        .WithMany("ThematicLooks")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdUserNavigation");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.CapsuleWardrobe", b =>
+                {
+                    b.Navigation("ClothingCapsules");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.Clothing", b =>
+                {
+                    b.Navigation("ClothingCapsules");
+
+                    b.Navigation("ClothingLooks");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.ThematicLook", b =>
+                {
+                    b.Navigation("ClothingLooks");
+                });
+
+            modelBuilder.Entity("OutfitPlaner_Applcation.Models.User", b =>
+                {
+                    b.Navigation("CapsuleWardrobes");
+
+                    b.Navigation("Clothings");
+
+                    b.Navigation("ThematicLooks");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}

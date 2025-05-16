@@ -1,0 +1,349 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Добавить вещь";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/mywardrobe.css" />
+
+</head>
+<body>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div class="menu-icon" id="menuToggle">&#9776;</div>
+            <div class="menu-title">Меню гардероба</div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="/ProfileWardrobe/Clothing" class="nav-btn">
+                <i class="fas fa-tshirt"></i> Перейти к одежде
+            </a>
+        </div>
+
+        <ul class="menu-items">
+            <li><a href="/ProfileWardrobe/MyProfile"><i class="fas fa-user"></i> <span>Мой Профиль</span></a></li>
+            <li><a href="/ProfileWardrobe/MyWardrobe"><i class="fas fa-wardrobe"></i> <span>Мой Гардероб</span></a></li>
+            <li><a href="/Favorite/Favorite"><i class="fas fa-heart"></i> <span>Избранное</span></a></li>
+            <li><a href="/CapsuleWardrobe/CapsuleWardrobe"><i class="fas fa-suitcase"></i> <span>Капсулы</span></a></li>
+            <li><a href="/CapsuleWardrobe/ThematicCapsule"><i class="fas fa-palette"></i> <span>Тематические</span></a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Добавить новую вещь</h1>
+            <p>Заполните информацию о вещи, которую хотите добавить в гардероб</p>
+        </div>
+
+        <form id="addItemForm" class="add-item-form" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div id="formError" class="form-error"></div>
+
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="ItemType">Тип одежды</label>
+                    <select id="ItemType" name="ItemType" required>
+                        <option value="">Выберите тип</option>
+                        <option value="Футболка">Футболка</option>
+                        <option value="Рубашка">Рубашка</option>
+                        <option value="Блузка">Блузка</option>
+                        <option value="Брюки">Брюки</option>
+                        <option value="Джинсы">Джинсы</option>
+                        <option value="Юбка">Юбка</option>
+                        <option value="Платье">Платье</option>
+                        <option value="Верхняя одежда">Верхняя одежда</option>
+                        <option value="Обувь">Обувь</option>
+                        <option value="Аксессуары">Аксессуары</option>
+                    </select>
+                    <div class="error-message" id="ItemTypeError">Пожалуйста, выберите тип</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Изображение вещи</label>
+                    <div class="image-upload" id="imageUpload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Перетащите сюда изображение или кликните для выбора</p>
+                        <p>Максимальный размер: 5MB (JPG, PNG)</p>
+                        <input type="file" id="ImageFile" name="ImageFile" accept="image/jpeg,image/png" style="display: none;" required>
+                        <img id="imagePreview" class="preview-image" alt="Предпросмотр">
+                    </div>
+                    <div class="error-message" id="ImageFileError">Пожалуйста, загрузите изображение (JPG или PNG, до 5MB)</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">Характеристики</div>
+
+                <div class="form-group">
+                    <label>Сезонность</label>
+                    <div class="tags-container" id="seasonTags">
+                        <div class="tag-option" data-value="Зима">Зима</div>
+                        <div class="tag-option" data-value="Весна">Весна</div>
+                        <div class="tag-option" data-value="Лето">Лето</div>
+                        <div class="tag-option" data-value="Осень">Осень</div>
+                        <div class="tag-option" data-value="Всесезонное">Всесезонное</div>
+                    </div>
+                    <input type="hidden" id="Season" name="Season" required>
+                    <div class="error-message" id="SeasonError">Пожалуйста, выберите сезон</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Цвет</label>
+                    <div class="tags-container" id="colorTags">
+                        <div class="tag-option color-tag" data-value="Чёрный" style="background: #000; color: white;">Чёрный</div>
+                        <div class="tag-option color-tag" data-value="Белый" style="background: #fff; border: 1px solid #ddd;">Белый</div>
+                        <div class="tag-option color-tag" data-value="Красный" style="background: #ff0000; color: white;">Красный</div>
+                        <div class="tag-option color-tag" data-value="Синий" style="background: #0000ff; color: white;">Синий</div>
+                        <div class="tag-option color-tag" data-value="Зелёный" style="background: #008000; color: white;">Зелёный</div>
+                        <div class="tag-option color-tag" data-value="Жёлтый" style="background: #ffff00;">Жёлтый</div>
+                        <div class="tag-option color-tag" data-value="Розовый" style="background: #ffc0cb;">Розовый</div>
+                        <div class="tag-option color-tag" data-value="Фиолетовый" style="background: #800080; color: white;">Фиолетовый</div>
+                        <div class="tag-option color-tag" data-value="Серый" style="background: #808080; color: white;">Серый</div>
+                        <div class="tag-option color-tag" data-value="Бежевый" style="background: #f5f5dc;">Бежевый</div>
+                        <div class="tag-option color-tag" data-value="Коричневый" style="background: #a52a2a; color: white;">Коричневый</div>
+                        <div class="tag-option color-tag" data-value="Мультиколор">Мультиколор</div>
+                    </div>
+                    <input type="hidden" id="Color" name="Color" required>
+                    <div class="error-message" id="ColorError">Пожалуйста, выберите цвет</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Стиль</label>
+                    <div class="tags-container" id="styleTags">
+                        <div class="tag-option" data-value="Повседневный">Повседневный</div>
+                        <div class="tag-option" data-value="Деловой">Деловой</div>
+                        <div class="tag-option" data-value="Спортивный">Спортивный</div>
+                        <div class="tag-option" data-value="Вечерний">Вечерний</div>
+                        <div class="tag-option" data-value="Уличный">Уличный</div>
+                        <div class="tag-option" data-value="Классический">Классический</div>
+                        <div class="tag-option" data-value="Бохо">Бохо</div>
+                        <div class="tag-option" data-value="Романтический">Романтический</div>
+                    </div>
+                    <input type="hidden" id="Style" name="Style" required>
+                    <div class="error-message" id="StyleError">Пожалуйста, выберите стиль</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Material">Материал</label>
+                    <input type="text" id="Material" name="Material" placeholder="Например: Хлопок 100%" required>
+                    <div class="error-message" id="MaterialError">Пожалуйста, укажите материал</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Состояние (1-5)</label>
+                    <div class="tags-container" id="conditionTags">
+                        <div class="tag-option" data-value="1">1 - Почти новое</div>
+                        <div class="tag-option" data-value="2">2 - Отличное</div>
+                        <div class="tag-option" data-value="3">3 - Хорошее</div>
+                        <div class="tag-option" data-value="4">4 - Удовлетворительное</div>
+                        <div class="tag-option" data-value="5">5 - Плохое</div>
+                    </div>
+                    <input type="hidden" id="Condition" name="Condition" required>
+                    <div class="error-message" id="ConditionError">Пожалуйста, укажите состояние</div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Добавить в гардероб</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Управление боковым меню
+            const menuToggle = document.getElementById('menuToggle');
+            const sideMenu = document.getElementById('sideMenu');
+
+            menuToggle.addEventListener('click', function() {
+                sideMenu.classList.toggle('expanded');
+            });
+
+            const form = document.getElementById('addItemForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const imageUpload = document.getElementById('imageUpload');
+            const itemImage = document.getElementById('ImageFile');
+            const imagePreview = document.getElementById('imagePreview');
+            const formError = document.getElementById('formError');
+
+            function showError(errorId, message = null) {
+                const errorElement = document.getElementById(errorId);
+                if (message) errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            function hideError(errorId) {
+                document.getElementById(errorId).style.display = 'none';
+            }
+
+            // Обработка загрузки изображения
+            imageUpload.addEventListener('click', () => itemImage.click());
+
+            itemImage.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                    showError('ImageFileError', 'Поддерживаются только изображения JPG и PNG');
+                    return;
+                }
+
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('ImageFileError', 'Изображение должно быть меньше 5 МБ');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imagePreview.src = event.target.result;
+                    imagePreview.style.display = 'block';
+                    hideError('ImageFileError');
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Обработка перетаскивания изображения
+            ['dragover', 'dragleave', 'drop'].forEach(eventName => {
+                imageUpload.addEventListener(eventName, function(e) {
+                    e.preventDefault();
+                    if (eventName === 'dragover') {
+                        this.style.borderColor = '#4a6fa5';
+                        this.style.backgroundColor = '#f0f7ff';
+                    } else if (eventName === 'dragleave') {
+                        this.style.borderColor = '#ccc';
+                        this.style.backgroundColor = '';
+                    } else if (eventName === 'drop') {
+                        this.style.borderColor = '#ccc';
+                        this.style.backgroundColor = '';
+                        const file = e.dataTransfer.files[0];
+                        if (file && (file.type.match('image/jpeg') || file.type.match('image/png'))) {
+                            itemImage.files = e.dataTransfer.files;
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                imagePreview.src = event.target.result;
+                                imagePreview.style.display = 'block';
+                                hideError('ImageFileError');
+                            };
+                            reader.readAsDataURL(file);
+                        } else {
+                            showError('ImageFileError', 'Поддерживаются только изображения JPG и PNG');
+                        }
+                    }
+                });
+            });
+
+            function setupTagSelection(containerId, hiddenInputId, errorId = null) {
+                const tags = document.querySelectorAll(`#${containerId} .tag-option`);
+                const hiddenInput = document.getElementById(hiddenInputId);
+
+                tags.forEach(tag => {
+                    tag.addEventListener('click', () => {
+                        tags.forEach(t => t.classList.remove('selected'));
+                        tag.classList.add('selected');
+                        hiddenInput.value = tag.getAttribute('data-value');
+                        if (errorId) hideError(errorId);
+                    });
+                });
+            }
+
+            setupTagSelection('seasonTags', 'Season', 'SeasonError');
+            setupTagSelection('colorTags', 'Color', 'ColorError');
+            setupTagSelection('styleTags', 'Style', 'StyleError');
+            setupTagSelection('conditionTags', 'Condition', 'ConditionError');
+
+            // Валидация формы
+            function validateForm() {
+                let isValid = true;
+
+                if (!document.getElementById('ItemType').value) {
+                    showError('ItemTypeError', 'Пожалуйста, выберите тип');
+                    isValid = false;
+                }
+
+                if (!document.getElementById('Material').value.trim()) {
+                    showError('MaterialError', 'Пожалуйста, укажите материал');
+                    isValid = false;
+                }
+
+                if (!itemImage.files.length) {
+                    showError('ImageFileError', 'Пожалуйста, загрузите изображение');
+                    isValid = false;
+                }
+
+                ['Season', 'Color', 'Style', 'Condition'].forEach(field => {
+                    if (!document.getElementById(field).value) {
+                        showError(`${field}Error`, `Пожалуйста, выберите ${field.toLowerCase()}`);
+                        isValid = false;
+                    }
+                });
+
+                return isValid;
+            }
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                formError.style.display = 'none';
+
+                if (!validateForm()) return;
+                if (!confirm('Вы уверены, что хотите добавить эту вещь в гардероб?')) return;
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Добавляем...';
+
+                try {
+                    const formData = new FormData(form);
+
+                    formData.append('ItemType', document.getElementById('ItemType').value);
+                    formData.append('ImageFile', document.getElementById('ImageFile').files[0]);
+                    formData.append('Season', document.getElementById('Season').value);
+                    formData.append('Color', document.getElementById('Color').value);
+                    formData.append('Style', document.getElementById('Style').value);
+                    formData.append('Material', document.getElementById('Material').value);
+                    formData.append('Condition', document.getElementById('Condition').value);
+
+                    const response = await fetch('/ProfileWardrobe/AddClothingItem', {
+                        method: 'POST',
+                        headers: {
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        },
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.text();
+                        throw new Error(error);
+                    }
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Вещь успешно добавлена!');
+                        form.reset();
+                        imagePreview.style.display = 'none';
+                        document.querySelectorAll('.tag-option.selected').forEach(el => el.classList.remove('selected'));
+                        document.querySelectorAll('input[type="hidden"]').forEach(el => el.value = '');
+                    } else {
+                        throw new Error(result.message || 'Ошибка при сохранении');
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    formError.textContent = error.message;
+                    formError.style.display = 'block';
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Добавить в гардероб';
+                }
+            });
+
+            // Скрытие ошибок 
+            document.getElementById('ItemType').addEventListener('change', () => hideError('ItemTypeError'));
+            document.getElementById('Material').addEventListener('input', () => hideError('MaterialError'));
+        });
+    </script>
+</body>
+</html>
