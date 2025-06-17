@@ -1,30 +1,214 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Capsule Wardrobe";
     Layout = null;
 }
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/main.css" />
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --text-color: #000000;
+            --light-bg: #f8f9fa;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .content-container {
+            display: flex;
+            height: 100vh;
+            padding: 80px 5% 40px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+
+        .text-content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .image-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+
+            .app-image:hover {
+                transform: scale(1.02);
+            }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .lead {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-color);
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .features-list {
+            margin: 2.5rem 0;
+            padding-left: 0;
+        }
+
+            .features-list li {
+                margin-bottom: 1.2rem;
+                font-size: 1.1rem;
+                position: relative;
+                padding-left: 35px;
+                list-style: none;
+                line-height: 1.5;
+            }
+
+                .features-list li:before {
+                    content: "•";
+                    color: var(--secondary-color);
+                    position: absolute;
+                    left: 0;
+                    font-size: 1.8rem;
+                    line-height: 1;
+                    top: -3px;
+                }
+
+        .menu-icon {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            z-index: 1000;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        .menu {
+            display: none;
+            position: fixed;
+            top: 90px;
+            left: 25px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            z-index: 999;
+            width: 250px;
+        }
+
+        #menu-toggle:checked ~ .menu {
+            display: block;
+        }
+
+        .menu ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu li {
+            margin-bottom: 12px;
+        }
+
+        .menu a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+
+            .menu a:hover {
+                background-color: rgba(52, 152, 219, 0.1);
+                color: var(--secondary-color);
+            }
+
+        .menu i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="burger-menu">
-        <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" class="menu-icon">&#9776;</label>
-        <nav class="menu">
-            <ul>
-                <li><a href="/ProfileWardrobe/MyProfile" data-title="Мой Профиль"><i class="fas fa-user"></i></a></li>
-                <li><a href="/Favorite/Favorite" data-title="Избранное"><i class="fa fa-thumbs-up"></i></a></li>
-                <li><a href="/ProfileWardrobe/MyWardrobe" data-title="Мой Гардероб"><i class="fas fa-tshirt"></i></a></li>
-                <li><a href="/CapsuleWardrobe/CapsuleWardrobe" data-title="Капсульный Гардероб"><i class="fas fa-suitcase"></i></a></li>
-                <li><a href="/ThematicCapsule/ThematicCapsule" data-title="Тематическая капсула"><i class="fas fa-palette"></i></a></li>
-            </ul>
-        </nav>
-    </div>
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="menu-icon">
+        <i class="fas fa-bars"></i>
+    </label>
+    <nav class="menu">
+        <ul>
+            <li><a href="/ProfileWardrobe/MyProfile"><i class="fas fa-user"></i>Мой Профиль</a></li>
+            <li><a href="/ProfileWardrobe/MyWardrobe"><i class="fas fa-tshirt"></i>Мой Гардероб</a></li>
+            <li><a href="/CapsuleWardrobe/CapsuleWardrobe"><i class="fas fa-suitcase"></i>Капсулы</a></li>
+            <li><a href="/ThematicCapsule/ThematicCapsule"><i class="fas fa-palette"></i>Тематические</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href="/Home/Edit"><i class="fas fa-cog"></i>Админ-панель</a></li>
+            }
+        </ul>
+    </nav>
 
-    <h1>Добро пожаловать на главную страницу!</h1>
-    <p>Вы успешно авторизовались.</p>
+    <div class="content-container">
+        <div class="text-content">
+            <h1>Ваш персональный стилист в цифровом формате</h1>
+            <p class="lead">Capsule Wardrobe — это инновационное приложение, которое превратит ваш гардероб в источник бесконечных стильных сочетаний</p>
+
+            <ul class="features-list">
+                <li>Просто загружайте фотографии своей одежды, указывая все важные детали: от стиля и цвета до сезона и типа</li>
+                <li>Наш интеллектуальный алгоритм анализирует ваш гардероб и предлагает идеальные сочетания</li>
+                <li>Создавайте тематические капсулы для работы, отдыха или особых мероприятий</li>
+            </ul>
+        </div>
+
+        <div class="image-content">
+            <img src="~/image/home_page.png" alt="Интерфейс приложения Capsule Wardrobe" class="app-image" />
+        </div>
+    </div>
 </body>
+</html>
